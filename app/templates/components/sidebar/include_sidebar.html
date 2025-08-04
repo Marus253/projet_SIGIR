@@ -1,0 +1,12 @@
+
+{% if user.is_authenticated %}
+    {% if user.role == 'ADMIN' %}
+        {% include 'components/sidebar/admin_sidebar.html' %}
+    {% elif user.role == 'AGENT' %}
+        {% include 'components/sidebar/agent_sidebar.html' %}
+    {% elif user.role == 'OPJ' %}
+        {% include 'components/sidebar/opj_sidebar.html' %}
+    {% elif user.role == 'USAGER' %}
+        {% include 'components/sidebar/usager_sidebar.html' %}
+    {% endif %}
+{% endif %}

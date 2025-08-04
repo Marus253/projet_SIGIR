@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card p-4 shadow rounded-4">
+        <h3 class="text-center mb-4">Paiement sécurisé</h3>
+        <form id="payment-form">
+          <div id="card-element" class="mb-3"></div>
+          <button type="submit" id="submit" class="btn btn-primary w-100">Payer</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+  const stripe = Stripe("{{ STRIPE_PUBLIC_KEY }}");
+  const elements = stripe.elements();
+  const card = elements.create("card");
+  card.mount("#card-element");
+
+  const form = document.getElementById("payment-form");
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const { error, paymentIntent } = await stripe.confirmCardPayment("{{ client_secret }}", {
+      payment_method: {
+        card: card,
+      }
+    });
+
+    if (!error) {
+      window.location.href = "{% url 'paiement_succes' %}";
+    }
+  });
+</script>
+{% endblock %}

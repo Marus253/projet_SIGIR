@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}SIGIR(Système Intégré de Gestion des Infractions Routières) {% endblock %}</title>
+    {% load static %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'styles.css' %}">
+
+</head>
+<body>
+{% if user.is_authenticated %}
+    <div class="app-container">
+      {% include 'components/sidebar/include_sidebar.html' %}
+             
+        <main class="app-content">
+            {% block content %}{% endblock %}
+        </main>
+        
+        {% include 'components/footer.html' %}
+    </div>
+    {% else %}
+    <div class="auth-container">
+        {% block auth_content %}{% endblock %}
+    </div>
+    {% endif %}
+   </div>
+<!-- partial -->
+  <script  src="{% static 'script.js'%}"></script>
+  <script src="{% static 'bootstrap.min.js'}"></script>
+
+</body>
+</html>

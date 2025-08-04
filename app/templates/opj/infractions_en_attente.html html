@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Infractions à traiter</h3>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Plaque</th>
+      <th>Infraction</th>
+      <th>Date</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for infraction in infractions %}
+    <tr>
+      <td>{{ infraction.id }}</td>
+      <td>{{ infraction.vehicule.plaque_immatriculation }}</td>
+      <td>{{ infraction.bareme.description }}</td>
+      <td>{{ infraction.date_infraction }}</td>
+      <td>
+        <a href="{% url 'traiter_infraction' infraction.id 'valider' %}" class="btn btn-success btn-sm">Valider</a>
+        <a href="{% url 'traiter_infraction' infraction.id 'classer' %}" class="btn btn-warning btn-sm">Classer</a>
+        <a href="{% url 'traiter_infraction' infraction.id 'transmettre' %}" class="btn btn-danger btn-sm">Transmettre</a>
+      </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="5">Aucune infraction à traiter</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

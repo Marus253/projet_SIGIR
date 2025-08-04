@@ -1,0 +1,37 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card p-4 shadow rounded-4 bg-white">
+        <h3 class="text-center text-success">Note de Perception</h3>
+        <hr>
+        <div class="row mb-2">
+          <div class="col-6"><strong>Agent PCR :</strong> {{ infraction.agent.user.get_full_name }}</div>
+          <div class="col-6"><strong>Plaque :</strong> {{ infraction.vehicule.plaque_immatriculation }}</div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-6"><strong>Infraction :</strong> {{ infraction.bareme.type_infraction.libelle }}</div>
+          <div class="col-6"><strong>Description :</strong> {{ infraction.bareme.description }}</div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-6"><strong>Lieu :</strong> {{ infraction.lieu }}</div>
+          <div class="col-6"><strong>Date :</strong> {{ infraction.date_infraction|date:"d/m/Y H:i" }}</div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-12"><strong>Montant à payer :</strong> <span class="text-danger fw-bold">{{ infraction.bareme.montant }} FC</span></div>
+        </div>
+        {% if infraction.qr_code %}
+          <div class="text-center mb-3">
+            <img src="{{ infraction.qr_code.url }}" alt="QR Code" class="img-thumbnail" width="150">
+          </div>
+        {% endif %}
+        <div class="text-center">
+          <button onclick="window.print()" class="btn btn-primary">Imprimer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
